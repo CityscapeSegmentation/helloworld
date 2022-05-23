@@ -18,7 +18,7 @@ if 'flag' not in st.session_state:
 	#st.session_state.model = UNet(15)
 	deep_model=UNet(15)
 	deep_model.cpu()
-	deep_model.load_state_dict(torch.load('weights/best_cpu.pt'))
+	deep_model.load_state_dict(torch.load('weights/best_cpu.pt',map_location ='cpu'))
 	st.session_state.flag=True
 	#st.session_state.model=model
 
