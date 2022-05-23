@@ -46,11 +46,13 @@ mask_path='data/val/mask/'+str(target)+'.png'
 rgb=Image.open(rgb_path)
 mask=Image.open(mask_path)
 
+mask=15*np.array(mask)
+
 
 with col1:
    st.image(rgb, caption=str(target)+'.png')
 with col2:
-   st.image(15*mask, caption=' Mask'+str(target)+'.png')
+   st.image(mask, caption=' Mask'+str(target)+'.png')
 
 st.write('👈  Please upload an image ')
 
