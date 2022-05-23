@@ -66,6 +66,7 @@ image=image.float()
 
 
 image=torch.unsqueeze(image, 0).cpu()
+deep_model.cpu()
 
 preds=deep_model(image)
 
