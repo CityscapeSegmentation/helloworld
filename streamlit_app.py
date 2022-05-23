@@ -61,13 +61,17 @@ rgb=Image.open(rgb_path)
 image=np.array(rgb)
 image = trans(image)
 
+image=image.float()
+
+
+
 image=torch.unsqueeze(image, 0)
 
 preds=deep_model(image)
 
 values,indecies=torch.max(preds,dim=1)
 
-indecies=indecies.squeeze().cpu().nump()
+indecies=indecies.squeeze().cpu().numpy()
 
 
 st.write(image.shape)
