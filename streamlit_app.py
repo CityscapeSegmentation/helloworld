@@ -7,7 +7,7 @@ from  PIL import Image
 
 
 if 'count' not in st.session_state:
-	st.session_state.count = 0
+	st.session_state.count = 1
 
 
 uploaded_file = st.file_uploader("Choose a file")
