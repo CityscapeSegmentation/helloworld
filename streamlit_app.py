@@ -54,6 +54,9 @@ rgb=Image.open(rgb_path)
 image=np.array(rgb)
 image = trans(image)
 
+image=torch.unsqueeze(image, 0)
+
+
 st.write(image.shape)
 
 
