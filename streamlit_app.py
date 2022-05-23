@@ -5,6 +5,7 @@ import matplotlib
 import numpy as np
 from  PIL import Image
 from model import UNet
+from utils import trans
 
 
 if 'count' not in st.session_state:
@@ -50,15 +51,22 @@ rgb_path='data/val/rgb/'+str(target)+'.png'
 mask_path='data/val/mask/'+str(target)+'.png'
   
 rgb=Image.open(rgb_path)
+image=np.array(rgb)
+image = trans(image)
+st.write(image.shape)
+
+
+
+
 mask=Image.open(mask_path)
 
-mask=15*np.array(mask)
+mask_brighter=np.array(mask)
 
 
 with col1:
    st.image(rgb, caption=str(target)+'.png')
 with col2:
-   st.image(mask, caption=' Mask'+str(target)+'.png')
+   st.image(15*mask_brighter, caption=' Mask'+str(target)+'.png')
 
 #st.write('👈  Please upload an image ')
 
