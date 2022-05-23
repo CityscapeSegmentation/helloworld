@@ -10,7 +10,7 @@ if 'count' not in st.session_state:
 	st.session_state.count = 1
 
 
-uploaded_file = st.file_uploader("Choose a file")
+#uploaded_file = st.file_uploader("Choose a file")
 
 col1, col2 = st.columns(2)
 
@@ -54,5 +54,5 @@ with col1:
 with col2:
    st.image(mask, caption=' Mask'+str(target)+'.png')
 
-st.write('👈  Please upload an image ')
+#st.write('👈  Please upload an image ')
 
