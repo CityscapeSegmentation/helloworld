@@ -15,9 +15,9 @@ uploaded_file = st.file_uploader("Choose a file")
 col1, col2 = st.columns(2)
 
 
-increment = st.button('Increment')
-if increment:
-    st.session_state.count += 1
+# increment = st.button('Increment')
+# if increment:
+#     st.session_state.count += 1
 
 # # A button to decrement the counter
 # decrement = st.button('Decrement')
