@@ -39,8 +39,8 @@ with col2:
    if st.session_state.count>500:
       target=st.session_state.count=500
 	
-rgb_path='data/val/rgb/'+str(target)+'jpg'
-mask_path='data/val/mask/'+str(target)+'jpg'
+rgb_path='data/val/rgb/'+str(target)+'.jpg'
+mask_path='data/val/mask/'+str(target)+'.jpg'
   
 rgb=Image.open(rgb_path)
 mask=Image.open(mask_path)
