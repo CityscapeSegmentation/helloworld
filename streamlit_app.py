@@ -8,16 +8,20 @@ from model import UNet
 from utils import trans
 
 
+
+
+
 if 'count' not in st.session_state:
 	st.session_state.count = 1
 
 if 'flag' not in st.session_state:
 	#st.session_state.model = UNet(15)
-	model=UNet(15)
-	model.cpu()
-	model.load_state_dict(torch.load('weights/best_cpu.pt'))
+	deep_model=UNet(15)
+	deep_model.cpu()
+	deep_model.load_state_dict(torch.load('weights/best_cpu.pt'))
 	st.session_state.flag=True
 	#st.session_state.model=model
+
 	
 
 #uploaded_file = st.file_uploader("Choose a file")
