@@ -3,7 +3,7 @@ from datetime import time, datetime
 import torch
 import matplotlib
 import numpy as np
-import PIL
+from  PIL import Image
 
 
 
