@@ -63,6 +63,12 @@ image = trans(image)
 
 image=torch.unsqueeze(image, 0)
 
+preds=deep_model(image)
+
+values,indecies=torch.max(preds,dim=1)
+
+indecies=indecies.squeeze().cpu().nump()
+
 
 st.write(image.shape)
 
@@ -79,5 +85,8 @@ with col1:
 with col2:
    st.image(15*mask_brighter, caption=' Mask'+str(target)+'.png')
 
-#st.write('👈  Please upload an image ')
+st.image(15*indecies, caption=' Preds'+str(target)+'.png')
+
+
+
 
