@@ -28,16 +28,16 @@ if increment:
 with col1:
    decrement = st.button('Decrement')
    if decrement:
-	st.session_state.count -= 1
+       st.session_state.count -= 1
    if st.session_state.count<1:
-	target=st.session_state.count=1
+       target=st.session_state.count=1
 
 with col2:
    increment = st.button('Increment')
    if increment:
-	st.session_state.count += 1
+       st.session_state.count += 1
    if st.session_state.count>500:
-	target=st.session_state.count=500
+      target=st.session_state.count=500
 	
 rgb_path='data/val/rgb/'+str(target)+'jpg'
 mask_path='data/val/mask/'+str(target)+'jpg'
