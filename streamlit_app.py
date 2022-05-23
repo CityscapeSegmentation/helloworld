@@ -1,5 +1,10 @@
 import streamlit as st
 from datetime import time, datetime
+import torch
+import matplotlib
+import numpy as np
+import PIL
+
 
 st.header('st.slider')
 
