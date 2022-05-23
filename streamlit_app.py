@@ -4,11 +4,15 @@ import torch
 import matplotlib
 import numpy as np
 from  PIL import Image
+from model import UNet
 
 
 if 'count' not in st.session_state:
 	st.session_state.count = 1
 
+if 'model' not in st.session_state:
+	st.session_state.model = UNet(15)
+	
 
 #uploaded_file = st.file_uploader("Choose a file")
 
