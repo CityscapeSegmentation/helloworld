@@ -12,10 +12,11 @@ if 'count' not in st.session_state:
 	st.session_state.count = 1
 
 if 'model' not in st.session_state:
-	st.session_state.model = UNet(15)
-	model=st.session_state.model
+	#st.session_state.model = UNet(15)
+	model=UNet(15)
 	model.cpu()
 	model.load_state_dict(torch.load('weights/best_cpu.pt'))
+	st.session_state.model=model
 	
 
 #uploaded_file = st.file_uploader("Choose a file")
