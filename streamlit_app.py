@@ -26,14 +26,14 @@ if increment:
 
 
 with col1:
-  decrement = st.button('Decrement')
+   decrement = st.button('Decrement')
    if decrement:
 	st.session_state.count -= 1
    if st.session_state.count<1:
 	target=st.session_state.count=1
 
 with col2:
-  increment = st.button('Increment')
+   increment = st.button('Increment')
    if increment:
 	st.session_state.count += 1
    if st.session_state.count>500:
