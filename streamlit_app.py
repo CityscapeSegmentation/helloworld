@@ -6,6 +6,10 @@ import numpy as np
 from  PIL import Image
 
 
+if 'count' not in st.session_state:
+	st.session_state.count = 0
+
+
 uploaded_file = st.file_uploader("Choose a file")
 
 col1, col2 = st.columns(2)
