@@ -53,6 +53,7 @@ mask_path='data/val/mask/'+str(target)+'.png'
 rgb=Image.open(rgb_path)
 image=np.array(rgb)
 image = trans(image)
+
 st.write(image.shape)
 
 
