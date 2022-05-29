@@ -35,7 +35,7 @@ else:
 col1, col2 = st.columns(2)
 
 
-# increment = st.button('Increment')
+# increment = st.button('Next')
 # if increment:
 #     st.session_state.count += 1
 
@@ -46,7 +46,7 @@ col1, col2 = st.columns(2)
 
 
 with col1:
-   decrement = st.button('Decrement')
+   decrement = st.button('Prev')
    if decrement:
        st.session_state.count -= 1
    if st.session_state.count<1:
