@@ -10,6 +10,7 @@ from utils import  givin_colors
 from utils import  target_names
 from utils import  AddTextToMask
 from sklearn.metrics import classification_report
+import pandas as pd
 
 
 
@@ -119,6 +120,9 @@ fl=open('report.csv','w')
 fl.write(s+'\n')
 fl.close()
 
+df=pd.read_csv('report.csv')
+
+st.dataframe(df)
 
 
 #st.write(np.unique(pred),np.unique(mask))
