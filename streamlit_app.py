@@ -78,6 +78,7 @@ indecies=indecies.squeeze().cpu().numpy()
 
 
 st.write(image.shape)
+st.write('--------------------------------------------------------------')
 
 
 
