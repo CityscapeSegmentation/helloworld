@@ -94,6 +94,7 @@ with col2:
    mask_brighter=mask_brighter.reshape((-1))
    colored_mask=givin_colors[mask_brighter]
    colored_mask=colored_mask.reshape((shape[0],shape[1],3))
+   #colored_mask=
    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
 st.write(indecies.shape)
