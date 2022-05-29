@@ -53,7 +53,7 @@ with col1:
        st.session_state.count=1
 
 with col2:
-   increment = st.button('Increment')
+   increment = st.button('Next')
    if increment:
        st.session_state.count += 1
    if st.session_state.count>500:
