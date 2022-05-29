@@ -109,7 +109,9 @@ colored_pred=AddTextToMask(pred,target_names)
 	
 st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
-st.write(np.unique(pred),np.unique(mask))
+
+
+#st.write(np.unique(pred),np.unique(mask))
 
 # st.write(colored_pred.shape)
 # st.write(colored_mask.shape)
