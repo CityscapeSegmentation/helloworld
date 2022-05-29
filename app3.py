@@ -81,7 +81,7 @@ values,indecies=torch.max(preds,dim=1)
 indecies=indecies.squeeze().cpu().numpy()
 
 
-st.write(image.shape)
+
 
 
 
@@ -119,7 +119,9 @@ report_dict=classification_report(mask.reshape(-1), pred.reshape(-1),target_name
 
 df=pd.DataFrame(report_dict)
 
-st.dataframe(df)
+df1=df.T
+
+st.dataframe(df1)
 
  
  
