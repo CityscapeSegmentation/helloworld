@@ -89,13 +89,11 @@ mask=Image.open(mask_path)
 
 mask=np.array(mask,dtype=np.uint8)
 
-shape=mask_brighter.shape
+shape=mask.shape
 with col1:
    st.image(rgb, caption=str(target)+'.png')
 with col2:
-   #tmp=mask_brighter.reshape((-1))
-   #colored_mask=givin_colors[tmp]
-   #colored_mask=colored_mask.reshape((shape[0],shape[1],3))
+ 
    colored_mask=AddTextToMask(mask,target_names)
    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
