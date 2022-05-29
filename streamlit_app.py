@@ -83,26 +83,26 @@ st.write('--------------------------------------------------------------')
 
 
 
-mask=Image.open(mask_path)
+# mask=Image.open(mask_path)
 
-mask_brighter=np.array(mask)
+# mask_brighter=np.array(mask)
 
-shape=mask.shape
-with col1:
-   st.image(rgb, caption=str(target)+'.png')
-with col2:
-   mask_brighter=mask_brighter.reshape((-1))
-   colored_mask=givin_colors[mask_brighter]
-   colored_mask=colored_mask.reshape((shape[0],shape[1],3))
-   st.image(colored_mask, caption=' Mask'+str(target)+'.png')
+# shape=mask.shape
+# with col1:
+#    st.image(rgb, caption=str(target)+'.png')
+# with col2:
+#    mask_brighter=mask_brighter.reshape((-1))
+#    colored_mask=givin_colors[mask_brighter]
+#    colored_mask=colored_mask.reshape((shape[0],shape[1],3))
+#    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
-colored_pred=indecies.reshape((-1))
-colored_pred=givin_colors(colored_pred)
-colored_pred=colored_pred.reshape((shape[0],shape[1],3))
-st.image(colored_pred, caption=' Preds'+str(target)+'.png')
+# colored_pred=indecies.reshape((-1))
+# colored_pred=givin_colors(colored_pred)
+# colored_pred=colored_pred.reshape((shape[0],shape[1],3))
+# st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
-st.write(colored_pred.shape)
-st.write(colored_mask.shape)
+# st.write(colored_pred.shape)
+# st.write(colored_mask.shape)
  
 
 
