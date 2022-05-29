@@ -181,8 +181,13 @@ def PlotText(mask_,target_names_list):
 
 def AddTextToMask(mask,target_names):
     
+    shape=mask.shape
+    
     text_pos=PlotText(mask,target_names)
     colored_img=givin_colors[mask.reshape(-1)]
+    
+    colored_img=colored_img.reshape((shape[0],shape[1]))  
+    
     pil_im = Image.fromarray(colored_img)  
 
     for k in text_pos:
