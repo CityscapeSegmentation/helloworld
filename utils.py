@@ -204,3 +204,4 @@ def AddTextToMask(mask,target_names):
     new_mask=np.array(pil_im)
     return new_mask
     
+ 
