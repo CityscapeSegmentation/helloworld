@@ -86,7 +86,7 @@ st.write(image.shape)
 
 mask=Image.open(mask_path)
 
-mask_brighter=np.array(mask)
+mask_brighter=np.array(mask,dtype=np.uint8)
 
 shape=mask_brighter.shape
 with col1:
@@ -99,14 +99,15 @@ with col2:
    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
 st.write(indecies.shape)
-colored_pred=indecies.reshape((-1))
+
+pred=np.array(indecies,dtype=np.uint8)
 
 
 #colored_pred=givin_colors[colored_pred]
 #colored_pred=colored_pred.reshape((shape[0],shape[1],3))
-colored_mask=AddTextToMask(colored_pred,target_names)
+colored_pred=AddTextToMask(pred,target_names)
 	
-st.image(colored_mask, caption=' Preds'+str(target)+'.png')
+st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
 # st.write(colored_pred.shape)
 # st.write(colored_mask.shape)
