@@ -95,6 +95,7 @@ with col2:
    colored_mask=colored_mask.reshape((shape[0],shape[1],3))
    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
+st.write(indecies.shape)
 colored_pred=indecies.reshape((-1))
 colored_pred=givin_colors(colored_pred)
 colored_pred=colored_pred.reshape((shape[0],shape[1],3))
