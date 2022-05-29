@@ -111,7 +111,13 @@ st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
 #st.write(classification_report(mask.reshape(-1), pred.reshape(-1), target_names=target_names))
 
-print(classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)        )
+#print(classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)        )
+
+s=print(classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)
+
+fl=open('report.csv','w')
+fl.write(s+'\n')
+fl.close()
 
 
 
