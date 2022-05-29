@@ -86,7 +86,7 @@ mask=Image.open(mask_path)
 
 mask_brighter=np.array(mask)
 
-shape=mask.shape
+shape=mask_brighter.shape
 with col1:
    st.image(rgb, caption=str(target)+'.png')
 with col2:
