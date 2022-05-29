@@ -114,21 +114,14 @@ st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
 #print(classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)        )
 
-s=classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)
+report_dict=classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)
 
-fl=open('report.csv','w')
-fl.write(s+'\n')
-fl.close()
-
-df=pd.read_csv('report.csv')
+#report_dict = classification_report(y_true, y_pred, output_dict=True)
+df=pd.DataFrame(report_dict)
 
 st.dataframe(df)
 
 
-#st.write(np.unique(pred),np.unique(mask))
-
-# st.write(colored_pred.shape)
-# st.write(colored_mask.shape)
  
 
 
