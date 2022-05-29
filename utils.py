@@ -186,7 +186,7 @@ def AddTextToMask(mask,target_names):
     text_pos=PlotText(mask,target_names)
     colored_img=givin_colors[mask.reshape(-1)]
     
-    colored_img=colored_img.reshape((shape[0],shape[1]))  
+    colored_img=colored_img.reshape((shape[0],shape[1],3))  
     
     pil_im = Image.fromarray(colored_img)  
 
