@@ -6,7 +6,7 @@ import numpy as np
 from  PIL import Image
 from model import UNet
 from utils import trans
-
+from utils import  givin_colors
 
 
 
@@ -86,13 +86,19 @@ mask=Image.open(mask_path)
 
 mask_brighter=np.array(mask)
 
-
+shape=mask.shape
 with col1:
    st.image(rgb, caption=str(target)+'.png')
 with col2:
-   st.image(15*mask_brighter, caption=' Mask'+str(target)+'.png')
+   mask_brighter=mask_brighter.reshape((-1))
+   colored_mask=givin_colors[mask_brighter]
+   colored_mask=colored_mask.reshape((shape[0],shape[1],3))
+   st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
-st.image(15*indecies, caption=' Preds'+str(target)+'.png')
+colored_pred=indecies.reshape((-1))
+colored_pred=givin_colors(colored_pred)
+colored_pred=colored_pred.reshape((shape[0],shape[1],3))
+st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
 
 
