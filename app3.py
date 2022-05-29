@@ -109,7 +109,9 @@ colored_pred=AddTextToMask(pred,target_names)
 st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
 
-st.write(classification_report(mask.reshape(-1), pred.reshape(-1), target_names=target_names))
+#st.write(classification_report(mask.reshape(-1), pred.reshape(-1), target_names=target_names))
+
+print(classification_report(All_image_gt,All_image_scores,target_names=target_names)        )
 
 
 
