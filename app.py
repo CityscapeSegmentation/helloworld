@@ -91,19 +91,21 @@ shape=mask_brighter.shape
 with col1:
    st.image(rgb, caption=str(target)+'.png')
 with col2:
-   mask_brighter=mask_brighter.reshape((-1))
-   colored_mask=givin_colors[mask_brighter]
-   colored_mask=colored_mask.reshape((shape[0],shape[1],3))
-   #colored_mask=
+   #tmp=mask_brighter.reshape((-1))
+   #colored_mask=givin_colors[tmp]
+   #colored_mask=colored_mask.reshape((shape[0],shape[1],3))
+   colored_mask=AddTextToMask(mask_brighter,target_names)
    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
 st.write(indecies.shape)
 colored_pred=indecies.reshape((-1))
 
 
-colored_pred=givin_colors[colored_pred]
-colored_pred=colored_pred.reshape((shape[0],shape[1],3))
-st.image(colored_pred, caption=' Preds'+str(target)+'.png')
+#colored_pred=givin_colors[colored_pred]
+#colored_pred=colored_pred.reshape((shape[0],shape[1],3))
+colored_mask=AddTextToMask(colored_pred,target_names)
+	
+st.image(colored_mask, caption=' Preds'+str(target)+'.png')
 
 # st.write(colored_pred.shape)
 # st.write(colored_mask.shape)
