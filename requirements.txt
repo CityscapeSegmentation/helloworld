@@ -3,3 +3,4 @@ torchvision
 opencv-python-headless
 matplotlib
 pandas
+scikit-learn==0.24.1
