@@ -3,6 +3,7 @@
 
 from torchvision import transforms, datasets, models
 from torch.utils.data import Dataset, DataLoader
+import streamlit as st
 
 import numpy as np
 import cv2
@@ -109,7 +110,10 @@ def PlotText(mask_,target_names_list):
         # You need to choose 4 or 8 for connectivity type
         connectivity = 8
         # Perform the operation to get information about regoins!!!
-        output = cv2.connectedComponentsWithStats(thresh, connectivity, cv2.CV_32S)
+        try:
+            output = cv2.connectedComponentsWithStats(thresh, connectivity, cv2.CV_32S)
+        except Exception as e:
+            st.write(e)
         # Get the results
         # The first cell is the number of labels
         num_labels = output[0]
