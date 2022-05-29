@@ -188,6 +188,8 @@ def AddTextToMask(mask,target_names):
     
     colored_img=colored_img.reshape((shape[0],shape[1],3))  
     
+    colored_img=np.array(colored_img,dtype=np.uint8)
+    
     pil_im = Image.fromarray(colored_img)  
 
     for k in text_pos:
