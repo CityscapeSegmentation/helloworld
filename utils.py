@@ -8,6 +8,8 @@ import numpy as np
 import cv2
 from PIL import ImageDraw,ImageFont,Image
 
+
+
     
 trans = transforms.Compose([
     transforms.ToTensor(),
@@ -178,7 +180,9 @@ def PlotText(mask_,target_names_list):
 
 
 def AddTextToMask(mask,target_names):
+    
     text_pos=PlotText(mask,target_names)
+    colored_img=givin_colors[mask.reshape(-1)]
     pil_im = Image.fromarray(colored_img)  
 
     for k in text_pos:
