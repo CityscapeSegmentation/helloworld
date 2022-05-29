@@ -193,7 +193,7 @@ def AddTextToMask(mask,target_names):
 
                 draw = ImageDraw.Draw(pil_im)  
                 # use a truetype font  
-                font = ImageFont.truetype("LiberationMono-BoldItalic.ttf", 10)  
+                font = ImageFont.truetype("Aaron-BoldItalic.ttf", 10)  
 
                 coords=text_pos[k]
                 # Draw the text  
