@@ -9,6 +9,7 @@ from utils import trans
 from utils import  givin_colors
 from utils import  target_names
 from utils import  AddTextToMask
+from sklearn.metrics import classification_report
 
 
 
@@ -86,7 +87,7 @@ st.write(image.shape)
 
 mask=Image.open(mask_path)
 
-mask_brighter=np.array(mask,dtype=np.uint8)
+mask=np.array(mask,dtype=np.uint8)
 
 shape=mask_brighter.shape
 with col1:
@@ -95,7 +96,7 @@ with col2:
    #tmp=mask_brighter.reshape((-1))
    #colored_mask=givin_colors[tmp]
    #colored_mask=colored_mask.reshape((shape[0],shape[1],3))
-   colored_mask=AddTextToMask(mask_brighter,target_names)
+   colored_mask=AddTextToMask(mask,target_names)
    st.image(colored_mask, caption=' Mask'+str(target)+'.png')
 
 st.write(indecies.shape)
@@ -108,6 +109,9 @@ pred=np.array(indecies,dtype=np.uint8)
 colored_pred=AddTextToMask(pred,target_names)
 	
 st.image(colored_pred, caption=' Preds'+str(target)+'.png')
+
+
+st.write(classification_report(mask.reshape(-1), pred.reshape(-1), target_names=target_names))
 
 
 
