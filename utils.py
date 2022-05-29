@@ -5,7 +5,8 @@ from torchvision import transforms, datasets, models
 from torch.utils.data import Dataset, DataLoader
 
 import numpy as np
-
+import cv2
+from PIL import ImageDraw,ImageFont,Image
 
     
 trans = transforms.Compose([
@@ -92,3 +93,110 @@ for c in tmp:
 
 givin_colors=np.array(givin_colors)
 #print(givin_colors.shape)
+
+
+def PlotText(mask_,target_names_list):
+    unq=np.unique(mask_).tolist()[1:]
+    print(np.unique(mask_).tolist())
+    text_pos={}
+    #print('***********')
+    for f in unq:
+        thresh=0*mask_
+        thresh[np.where(mask_==f)]=255       
+        
+        # You need to choose 4 or 8 for connectivity type
+        connectivity = 8
+        # Perform the operation to get information about regoins!!!
+        output = cv2.connectedComponentsWithStats(thresh, connectivity, cv2.CV_32S)
+        # Get the results
+        # The first cell is the number of labels
+        num_labels = output[0]
+        # The second cell is the label matrix
+
+        labels = output[1]
+        # The third cell is the stat matrix
+
+        #print(np.max(labels))
+        
+        
+        radius = 20
+  
+        # Blue color in BGR
+        color = (255, 0, 0)
+
+        # Line thickness of 2 px
+        thickness = 2
+
+
+
+        stats = output[2]
+        
+        #print(target_names_list[f])
+        #print(stats)
+        
+        
+        # The fourth cell is the centroid matrix
+        centroids = output[3]
+
+        
+
+        im=cv2.merge((thresh,thresh,thresh))
+        #print(im.shape)
+        Flag=False
+        current_class=target_names_list[f]
+        
+        text_pos[current_class]=[]
+        
+        
+        for i in range(1,stats.shape[0]):
+            if stats[i][4]>500: #number of pixels bigger than 500 pixels
+                
+                #im=cv2.rectangle(im, (stats[i][0], stats[i][1]), (stats[i][0]+stats[i][2], stats[i][1]+stats[i][3]), (0, 255, 0), 1)
+                Flag=True
+                #print(centroids[i])                                
+                x,y=centroids[i]
+                x,y=int(x),int(y)
+                
+                text_pos[current_class].append((x,y))
+                #print('***********************')
+                
+                
+  
+                # Using cv2.circle() method
+                # Draw a circle with blue line borders of thickness of 2 px
+                #im = cv2.circle(im,(x,y) , radius, color, thickness)
+        
+
+                
+        if Flag==True:
+            #print(f,target_names_list[f])
+            #plt.imshow(im)
+            #plt.show()
+            Flag=False
+            
+    return text_pos
+
+
+def AddTextToMask(mask,target_names):
+    text_pos=PlotText(mask,target_names)
+    pil_im = Image.fromarray(colored_img)  
+
+    for k in text_pos:
+         if len(text_pos[k])>0:
+                #print(k,len(text_pos[k]))          
+
+                text=k
+
+                draw = ImageDraw.Draw(pil_im)  
+                # use a truetype font  
+                font = ImageFont.truetype("LiberationMono-BoldItalic.ttf", 10)  
+
+                coords=text_pos[k]
+                # Draw the text  
+                for c in coords:
+                    x,y=c
+                    draw.text((x,y), text, font=font,fill=(255,255,255,0))  
+
+    new_mask=np.array(pil_im)
+    return new_mask
+    
