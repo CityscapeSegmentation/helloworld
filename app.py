@@ -154,31 +154,31 @@ with col3:
 
 
 
-#pred
-print('pred=',pred.shape)
-crfimage=crf(cpy_image,pred,'after_crf.png')
-if len( crfimage.shape)>2:
-   crfimage=crfimage[:,:,0]
-print('crfimage.shape=',crfimage.shape)
-colored_crfimage=AddTextToMask(crfimage,target_names)
+# #pred
+# print('pred=',pred.shape)
+# crfimage=crf(cpy_image,pred,'after_crf.png')
+# if len( crfimage.shape)>2:
+#    crfimage=crfimage[:,:,0]
+# print('crfimage.shape=',crfimage.shape)
+# colored_crfimage=AddTextToMask(crfimage,target_names)
 
 
 
 
 
-with col4:  
-   st.image(colored_crfimage, caption=' crf'+str(target)+'.png')
+# with col4:  
+#    st.image(colored_crfimage, caption=' crf'+str(target)+'.png')
 
  
 
-for i in range(15):
-   crfimage[0,i]=i
+# for i in range(15):
+#    crfimage[0,i]=i
  
-report_dict=classification_report(mask.reshape(-1), crfimage.reshape(-1),target_names=target_names, output_dict=True)
+# report_dict=classification_report(mask.reshape(-1), crfimage.reshape(-1),target_names=target_names, output_dict=True)
 
 
-df=pd.DataFrame(report_dict)
+# df=pd.DataFrame(report_dict)
 
-df1=df.T
+# df1=df.T
 
-st.dataframe(df1)
+# st.dataframe(df1)
