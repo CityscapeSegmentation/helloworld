@@ -114,6 +114,10 @@ st.image(colored_pred, caption=' Preds'+str(target)+'.png')
 
 #print(classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names)        )
 
+for i in range(15):
+   pred[0,i]=i
+
+
 report_dict=classification_report(mask.reshape(-1), pred.reshape(-1),target_names=target_names, output_dict=True)
 
 
