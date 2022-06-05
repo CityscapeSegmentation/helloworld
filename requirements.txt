@@ -3,5 +3,6 @@ torchvision
 opencv-python-headless
 matplotlib
 pandas
+scikit-learn
 scikit-image
 git+https://github.com/lucasb-eyer/pydensecrf.git
