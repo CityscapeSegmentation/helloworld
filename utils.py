@@ -11,10 +11,10 @@ from PIL import ImageDraw,ImageFont,Image
 
 
 import numpy as np
-import pydensecrf.densecrf as dcrf
+
 import matplotlib.pyplot as plt
 
-from pydensecrf.utils import unary_from_labels, create_pairwise_bilateral, create_pairwise_gaussian
+
 
 from skimage.color import gray2rgb
 from skimage.color import rgb2gray
