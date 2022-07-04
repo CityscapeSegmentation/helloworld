@@ -10,6 +10,14 @@ import cv2
 from PIL import ImageDraw,ImageFont,Image
 
 
+import matplotlib.pyplot as plt
+
+from pydensecrf.utils import unary_from_labels, create_pairwise_bilateral, create_pairwise_gaussian
+import pydensecrf.densecrf as dcrf
+
+
+from osgeo import gdal
+
 import numpy as np
 
 import matplotlib.pyplot as plt
@@ -28,18 +36,18 @@ Function which returns the labelled image after applying CRF
 #Original_image = Image which has to labelled
 #Annotated image = Which has been labelled by some technique( FCN in this case)
 #Output_path = Name of the final output image after applying CRF
-#Use_2d = boolean variable 
+#Use_2d = boolean variable
 #if use_2d = True specialised 2D fucntions will be applied
 #else Generic functions will be applied
 
 
 #####################################################
-    
+
 trans = transforms.Compose([
     transforms.ToTensor(),
          transforms.Normalize(mean=[0.485, 0.456, 0.406],
                               std=[0.229, 0.224, 0.225])
-])    
+])
 
 target_names=['avoid','ground','road','sidewalk','parking','building','fence or guard rail',
              'traffic sign or pole','vegetation','terrain','sky','person','vehicle','bike','wall']
@@ -47,27 +55,27 @@ target_names=['avoid','ground','road','sidewalk','parking','building','fence or 
 
 class CityDataset(Dataset):
     def __init__(self, data_path,  transform=None):
-        self.input_images=os.listdir(data_path+'/rgb')        
+        self.input_images=os.listdir(data_path+'/rgb')
         self.transform = transform
         self.data_path=data_path
-    
+
     def __len__(self):
         return len(self.input_images)
-    
-    def __getitem__(self, idx):     
-        
+
+    def __getitem__(self, idx):
+
         data_path=self.data_path
-        
+
         image = np.array(Image.open( data_path+'/rgb/'+ self.input_images[idx])  )
         mask = np.array(Image.open( data_path+'/mask/'+ self.input_images[idx]))
-        
+
         if self.transform:
             image = self.transform(image)
             mask=torch.from_numpy(mask).long()
             #mask=mask.long()
-        
+
         return [image, mask]
-    
+
 #val_set = CityDataset(data_path='data/val', transform = trans)
 #DataLoader(val_set, batch_size=1, shuffle=True, num_workers=0)
 
@@ -128,15 +136,15 @@ def PlotText(mask_,target_names_list):
     #print('***********')
     for f in unq:
         thresh=0*mask_
-        thresh[np.where(mask_==f)]=255       
-        
+        thresh[np.where(mask_==f)]=255
+
         # You need to choose 4 or 8 for connectivity type
         connectivity = 8
         # Perform the operation to get information about regoins!!!
         try:
-           
+
             shape=thresh.shape
-            if len(shape)>2:               
+            if len(shape)>2:
                 thresh=thresh[:,:,0]
             #cv2.imshow('thresh',thresh)
             #cv2.waitKey(0)
@@ -152,10 +160,10 @@ def PlotText(mask_,target_names_list):
         # The third cell is the stat matrix
 
         #print(np.max(labels))
-        
-        
+
+
         radius = 20
-  
+
         # Blue color in BGR
         color = (255, 0, 0)
 
@@ -165,83 +173,139 @@ def PlotText(mask_,target_names_list):
 
 
         stats = output[2]
-        
+
         #print(target_names_list[f])
         #print(stats)
-        
-        
+
+
         # The fourth cell is the centroid matrix
         centroids = output[3]
 
-        
+
 
         im=cv2.merge((thresh,thresh,thresh))
         #print(im.shape)
         Flag=False
         current_class=target_names_list[f]
-        
+
         text_pos[current_class]=[]
-        
-        
+
+
         for i in range(1,stats.shape[0]):
             if stats[i][4]>500: #number of pixels bigger than 500 pixels
-                
+
                 #im=cv2.rectangle(im, (stats[i][0], stats[i][1]), (stats[i][0]+stats[i][2], stats[i][1]+stats[i][3]), (0, 255, 0), 1)
                 Flag=True
-                #print(centroids[i])                                
+                #print(centroids[i])
                 x,y=centroids[i]
                 x,y=int(x),int(y)
-                
+
                 text_pos[current_class].append((x,y))
                 #print('***********************')
-                
-                
-  
+
+
+
                 # Using cv2.circle() method
                 # Draw a circle with blue line borders of thickness of 2 px
                 #im = cv2.circle(im,(x,y) , radius, color, thickness)
-        
 
-                
+
+
         if Flag==True:
             #print(f,target_names_list[f])
             #plt.imshow(im)
             #plt.show()
             Flag=False
-            
+
     return text_pos
 
 
 def AddTextToMask(mask,target_names):
-    
+
     shape=mask.shape
-    
+
     text_pos=PlotText(mask,target_names)
     colored_img=givin_colors[mask.reshape(-1)]
-    
-    colored_img=colored_img.reshape((shape[0],shape[1],3))  
-    
+
+    colored_img=colored_img.reshape((shape[0],shape[1],3))
+
     colored_img=np.array(colored_img,dtype=np.uint8)
-    
-    pil_im = Image.fromarray(colored_img)  
+
+    pil_im = Image.fromarray(colored_img)
 
     for k in text_pos:
          if len(text_pos[k])>0:
-                #print(k,len(text_pos[k]))          
+                #print(k,len(text_pos[k]))
 
                 text=k
 
-                draw = ImageDraw.Draw(pil_im)  
-                # use a truetype font  
-                font = ImageFont.truetype("Aaron-BoldItalic.ttf", 10)  
+                draw = ImageDraw.Draw(pil_im)
+                # use a truetype font
+                font = ImageFont.truetype("Aaron-BoldItalic.ttf", 10)
 
                 coords=text_pos[k]
-                # Draw the text  
+                # Draw the text
                 for c in coords:
                     x,y=c
-                    draw.text((x,y), text, font=font,fill=(255,255,255,0))  
+                    draw.text((x,y), text, font=font,fill=(255,255,255,0))
 
     new_mask=np.array(pil_im)
     return new_mask
-    
- 
+
+
+def crf(original_image, annotated_image,use_2d = True):
+
+    # Converting annotated image to RGB if it is Gray scale
+    if(len(annotated_image.shape)<3):
+        annotated_image = gray2rgb(annotated_image).astype(np.uint32)
+
+    #cv2.imwrite("testing2.png",annotated_image)
+    annotated_image = annotated_image.astype(np.uint32)
+    #Converting the annotations RGB color to single 32 bit integer
+    annotated_label = annotated_image[:,:,0].astype(np.uint32) + (annotated_image[:,:,1]<<8).astype(np.uint32) + (annotated_image[:,:,2]<<16).astype(np.uint32)
+
+    # Convert the 32bit integer color to 0,1, 2, ... labels.
+    colors, labels = np.unique(annotated_label, return_inverse=True)
+
+    #Creating a mapping back to 32 bit colors
+    colorize = np.empty((len(colors), 3), np.uint8)
+    colorize[:,0] = (colors & 0x0000FF)
+    colorize[:,1] = (colors & 0x00FF00) >> 8
+    colorize[:,2] = (colors & 0xFF0000) >> 16
+
+    #Gives no of class labels in the annotated image
+    n_labels = len(set(labels.flat))
+
+    print("No of labels in the Image are ")
+    print(n_labels)
+
+
+    #Setting up the CRF model
+    if use_2d :
+        d = dcrf.DenseCRF2D(original_image.shape[1], original_image.shape[0], n_labels)
+
+        # get unary potentials (neg log probability)
+        U = unary_from_labels(labels, n_labels, gt_prob=0.90, zero_unsure=False)
+        d.setUnaryEnergy(U)
+
+        # This adds the color-independent term, features are the locations only.
+        d.addPairwiseGaussian(sxy=(3, 3), compat=3, kernel=dcrf.DIAG_KERNEL,
+                          normalization=dcrf.NORMALIZE_SYMMETRIC)
+
+        # This adds the color-dependent term, i.e. features are (x,y,r,g,b).
+        d.addPairwiseBilateral(sxy=(80, 80), srgb=(13, 13, 13), rgbim=original_image,
+                           compat=10,
+                           kernel=dcrf.DIAG_KERNEL,
+                           normalization=dcrf.NORMALIZE_SYMMETRIC)
+
+    #Run Inference for 5 steps
+    Q = d.inference(5)
+
+    # Find out the most probable class for each pixel.
+    MAP = np.argmax(Q, axis=0)
+
+    # Convert the MAP (labels) back to the corresponding colors and save the image.
+    # Note that there is no "unknown" here anymore, no matter what we had at first.
+    MAP = colorize[MAP,:]
+    #cv2.imwrite(output_image,MAP.reshape(original_image.shape))
+    return MAP.reshape(original_image.shape)
