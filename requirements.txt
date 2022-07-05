@@ -5,4 +5,5 @@ matplotlib
 pandas
 scikit-learn
 scikit-image
+pydensecrf
 
